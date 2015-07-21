@@ -26,15 +26,16 @@ function panelized_node_json_view($nid) {
   // Load the requested node.
   $node = entity_load_single('node', $nid);
   // Check node exists.
-  if (!$node->title) {
-    $result['error'] = "Not found.";
+  if (isset($node) && !isset($node->title)) {
+    drupal_not_found();
+    return;
   }
   else {
     // Add title.
     $result['title'] = $node->title;
   }
   // Gather layout information.
-  if ($node->panelizer) {
+  if (isset($node->panelizer)) {
     $result['panelizer'] = $node->panelizer;    
   }
   else {
