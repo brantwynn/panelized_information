@@ -1,0 +1,45 @@
+<?php
+
+/**
+ * @file
+ * Contains panelized_information.module.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function panelized_information_menu() {
+  $items['pdi/%'] = array(
+    'page callback' => 'panelized_node_json_view',
+    'page arguments' => array(1),
+    'type' => MENU_CALLBACK,
+    'access arguments' => array('access content'),
+  );
+  return $items;
+}
+
+/**
+ * Panelized node menu callback.
+ */
+function panelized_node_json_view($nid) {
+  $result = array();
+  // Load the requested node.
+  $node = entity_load_single('node', $nid);
+  // Check node exists.
+  if (!$node->title) {
+    $result['error'] = "Not found.";
+  }
+  else {
+    // Add title.
+    $result['title'] = $node->title;
+  }
+  // Gather layout information.
+  if ($node->panelizer) {
+    $result['panelizer'] = $node->panelizer;    
+  }
+  else {
+    $result['panelizer'] = FALSE;
+  }
+  drupal_json_output($result);
+}
+

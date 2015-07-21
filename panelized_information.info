@@ -1,0 +1,7 @@
+name = Panelized Information
+description = Drupal's Panelizer information about the current node layout and content displayed therein.
+core = 7.x
+package = Panelizer
+version = 7.x-1.0
+project = panelized_information
+dependencies[] = panelizer
